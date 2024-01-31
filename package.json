@@ -1,0 +1,33 @@
+{
+  "name": "stellar-bgs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ark-ui/react": "^2.0.1",
+    "@radix-ui/react-slider": "^1.1.2",
+    "@radix-ui/react-switch": "^1.0.3",
+    "geist": "^1.2.1",
+    "next": "14.1.0",
+    "next-plugin-svgr": "^1.1.10",
+    "react": "^18",
+    "react-dom": "^18",
+    "uniqolor": "^1.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.0"
+  }
+}
