@@ -13,17 +13,13 @@ export const SegmentControl = (props: {
       onCheckedChange={(checked) =>
         onValueChange(checked ? items[1].value : items[0].value)
       }
-      style={{
-        boxShadow:
-          "24px 24px 24px 0px rgba(0, 0, 0, 0.04), 8px 8px 8px 0px rgba(0, 0, 0, 0.04), 4px 4px 4px 0px rgba(0, 0, 0, 0.04),0px 0px 0px 1px rgba(80, 99, 128, 0.17) inset",
-      }}
-      className="group bg-slate-950/40 w-full rounded-xl h-[40px] relative outline-none"
+      className="recess group bg-slate-900/40 w-full rounded-xl h-[40px] relative outline-none"
     >
       <Switch.Thumb asChild>
         <div className="absolute transition-all w-1/2 h-full rounded-md left-0 top-0 p-[4px] data-[state=checked]:left-[50%]">
           <div
             className={[
-              "bg-gradient-to-b from-slate-600 to-slate-500 w-full h-full rounded-lg",
+              "bg-gradient-to-b from-slate-700 to-slate-600 w-full h-full rounded-lg",
               "",
             ].join(" ")}
           ></div>

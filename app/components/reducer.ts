@@ -12,25 +12,30 @@ export type Color = {
 export type State = {
   colors: Color[];
   gradientAngle: number;
+  selectedColorId: string;
   gradientType: "linear-gradient" | "radial-gradient";
   noiseType: "turbulence" | "fractalNoise";
   noiseIntensity: number;
   noiseOpacity: number;
 };
 
+const id1 = generateRandomId();
+const id2 = generateRandomId();
+
 export const defaultState: State = {
   colors: [
     {
-      id: generateRandomId(),
+      id: id1,
       code: uniqolor.random().color,
       stop: 20,
     },
     {
-      id: generateRandomId(),
+      id: id2,
       code: uniqolor.random().color,
       stop: 80,
     },
   ],
+  selectedColorId: id1,
   gradientAngle: 90,
   gradientType: "linear-gradient",
   noiseType: "turbulence",
@@ -53,20 +58,18 @@ type RemoveColor = {
   };
 };
 
-type SwapColors = {
-  type: "SWAP_COLORS";
-
-  payload: {
-    id1: string;
-    id2: string;
-  };
-};
-
 type UpdateColorCode = {
   type: "UPDATE_COLOR_CODE";
   payload: {
     id: string;
     code?: string;
+  };
+};
+
+type UpdateSelectedGradientColorId = {
+  type: "UPDATE_SELECTED_GRADIENT_COLOR_ID";
+  payload: {
+    id: string;
   };
 };
 
@@ -120,7 +123,7 @@ type Reset = {
 export type Action =
   | AddColor
   | RemoveColor
-  | SwapColors
+  | UpdateSelectedGradientColorId
   | UpdateColorCode
   | UpdateColorStops
   | UpdateGradientAngle
@@ -148,41 +151,26 @@ const addColor: Handler<AddColor> = (payload, state) => {
   };
 };
 
-const removeColor: Handler<RemoveColor> = (payload, state) => {
+const updateSelectedGradientColorId: Handler<UpdateSelectedGradientColorId> = (
+  payload,
+  state
+) => {
   return {
     ...state,
-    colors: state.colors.filter((color) => color.id !== payload.id),
+    selectedColorId: payload.id,
   };
 };
 
-const swapColors: Handler<SwapColors> = (payload, state) => {
-  const { id1, id2 } = payload;
-
-  const color1 = state.colors.find((color) => color.id === id1);
-  const color2 = state.colors.find((color) => color.id === id2);
-
-  if (!color1 || !color2) {
-    return state;
+const removeColor: Handler<RemoveColor> = (payload, state) => {
+  const updatedColors = state.colors.filter((color) => color.id !== payload.id);
+  let selectedColorId = state.selectedColorId;
+  if (state.selectedColorId === payload.id) {
+    selectedColorId = updatedColors[0]?.id ?? "";
   }
-
-  const color1Index = state.colors.indexOf(color1);
-  const color2Index = state.colors.indexOf(color2);
-
-  const colors = [...state.colors];
-
-  colors[color1Index] = {
-    ...color2,
-    stop: color1.stop,
-  };
-
-  colors[color2Index] = {
-    ...color1,
-    stop: color2.stop,
-  };
-
   return {
     ...state,
-    colors,
+    colors: updatedColors,
+    selectedColorId,
   };
 };
 
@@ -287,45 +275,24 @@ const updateNoiseOpacity: Handler<UpdateNoiseOpacity> = (payload, state) => {
 
 const reset = (): State => defaultState;
 
+const handlers = {
+  ADD_COLOR: addColor,
+  REMOVE_COLOR: removeColor,
+  UPDATE_SELECTED_GRADIENT_COLOR_ID: updateSelectedGradientColorId,
+  UPDATE_COLOR_CODE: updateColorCode,
+  UPDATE_COLOR_STOPS: updateColorStops,
+  UPDATE_GRADIENT_ANGLE: updateGradientAngle,
+  UPDATE_GRADIENT_TYPE: updateGradientType,
+  UPDATE_NOISE_TYPE: updateNoiseType,
+  UPDATE_NOISE_INTENSITY: updateNoiseIntensity,
+  UPDATE_NOISE_OPACITY: updateNoiseOpacity,
+  RESET: reset,
+};
+
 export const reducer: Reducer<State, Action> = (
   state: State,
   action: Action
 ) => {
-  switch (action.type) {
-    case "ADD_COLOR": {
-      return addColor(action.payload, state);
-    }
-    case "REMOVE_COLOR": {
-      return removeColor(action.payload, state);
-    }
-    case "SWAP_COLORS": {
-      return swapColors(action.payload, state);
-    }
-    case "UPDATE_COLOR_CODE": {
-      return updateColorCode(action.payload, state);
-    }
-    case "UPDATE_COLOR_STOPS": {
-      return updateColorStops(action.payload, state);
-    }
-    case "UPDATE_GRADIENT_ANGLE": {
-      return updateGradientAngle(action.payload, state);
-    }
-    case "UPDATE_GRADIENT_TYPE": {
-      return updateGradientType(action.payload, state);
-    }
-    case "UPDATE_NOISE_TYPE": {
-      return updateNoiseType(action.payload, state);
-    }
-    case "UPDATE_NOISE_INTENSITY": {
-      return updateNoiseIntensity(action.payload, state);
-    }
-    case "UPDATE_NOISE_OPACITY": {
-      return updateNoiseOpacity(action.payload, state);
-    }
-    case "RESET": {
-      return reset();
-    }
-    default:
-      return state;
-  }
+  const handler = handlers[action.type] ?? (() => state);
+  return handler(action.payload as any, state);
 };
