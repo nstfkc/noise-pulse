@@ -68,33 +68,35 @@ export const SidebarGradientSection = () => {
         />
       </div>
       <div>
-        <GradientCurrentColor
-          updateColor={(id, code) => {
-            dispatch({
-              type: "UPDATE_COLOR_CODE",
-              payload: {
-                id,
-                code,
-              },
-            });
-          }}
-          deleteColor={(id) => {
-            dispatch({
-              type: "REMOVE_COLOR",
-              payload: { id },
-            });
-          }}
-          color={state.colors.find(
-            (color) => color.id === state.selectedColorId
-          )}
-        />
+        {state.selectedColorId && (
+          <GradientCurrentColor
+            updateColor={(id, code) => {
+              dispatch({
+                type: "UPDATE_COLOR_CODE",
+                payload: {
+                  id,
+                  code,
+                },
+              });
+            }}
+            deleteColor={(id) => {
+              dispatch({
+                type: "REMOVE_COLOR",
+                payload: { id },
+              });
+            }}
+            color={
+              state.colors.find((color) => color.id === state.selectedColorId)!
+            }
+          />
+        )}
       </div>
       <div>
         <div
           data-disabled={state.gradientType === "radial-gradient"}
           className="flex items-center justify-between gap-2 data-[disabled=true]:opacity-50"
         >
-          <div className="text-[15px] font-semibold">Angle</div>
+          <div className="text-[15px] font-medium">Angle</div>
           <SimpleSlider
             disabled={state.gradientType === "radial-gradient"}
             min={0}

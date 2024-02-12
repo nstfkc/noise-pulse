@@ -32,7 +32,7 @@ export const SidebarNoiseSection = () => {
         />
       </div>
       <div className="flex items-center justify-between gap-2">
-        <div className="text-[15px] font-semibold">Intensity</div>
+        <div className="text-[15px] font-medium">Intensity</div>
         <SimpleSlider
           min={0}
           max={5}
@@ -50,7 +50,7 @@ export const SidebarNoiseSection = () => {
         </div>
       </div>
       <div className="flex items-center justify-between gap-2 data-[disabled=true]:opacity-50">
-        <div className="text-[15px] font-semibold">Opacity</div>
+        <div className="text-[15px] font-medium">Opacity</div>
         <SimpleSlider
           min={0}
           max={1}

@@ -1,11 +1,16 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Noise } from "./Noise";
 import { Context } from "./context";
 
 export const Background = () => {
   const { state } = useContext(Context);
+
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setReady(true);
+  }, []);
 
   let bg = (_deg: number) => state.colors[0].code;
 
@@ -19,6 +24,8 @@ export const Background = () => {
         .map((color) => `${color.code} ${color.stop}%`)
         .join(", ")})`;
   }
+
+  if (!ready) return null;
 
   return (
     <div
