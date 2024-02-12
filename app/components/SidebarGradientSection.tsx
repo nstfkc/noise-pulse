@@ -69,6 +69,15 @@ export const SidebarGradientSection = () => {
       </div>
       <div>
         <GradientCurrentColor
+          updateColor={(id, code) => {
+            dispatch({
+              type: "UPDATE_COLOR_CODE",
+              payload: {
+                id,
+                code,
+              },
+            });
+          }}
           deleteColor={(id) => {
             dispatch({
               type: "REMOVE_COLOR",

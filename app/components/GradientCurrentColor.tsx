@@ -1,9 +1,11 @@
 import { Color } from "./reducer";
 import TrashIcon from "./icons/bin.svg";
+import { ColorInput } from "./ColorPicker";
 
 interface Props {
-  color?: Color;
+  color: Color;
   deleteColor: (colorId: string) => void;
+  updateColor: (colorId: string, code: string) => void;
 }
 
 export const GradientCurrentColor = (props: Props) => {
@@ -11,10 +13,16 @@ export const GradientCurrentColor = (props: Props) => {
   return (
     <div className="bg-slate-900/40 rounded-xl recess p-2 flex items-center justify-between">
       <div className="flex gap-2">
-        <div
-          className="size-6 rounded-md"
-          style={{ background: props.color.code }}
-        ></div>
+        <ColorInput
+          color={props.color.code}
+          onValueChange={(color) => {
+            console.log("color changed", color);
+            props.updateColor(props.color.id, color.valueAsString);
+          }}
+          onChange={(color) => {
+            console.log("color changed", color);
+          }}
+        />
         <div>{props.color.code}</div>
       </div>
       <button onClick={() => props.deleteColor(props.color.id)}>
