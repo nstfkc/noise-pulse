@@ -1,5 +1,5 @@
 "use client";
-import { State, Action, defaultState, reducer } from "./reducer";
+import { State, Action, reducer } from "./reducer";
 import { createContext, Dispatch, useReducer } from "react";
 
 interface ContextValue {
@@ -9,8 +9,15 @@ interface ContextValue {
 
 export const Context = createContext({} as ContextValue);
 
-export const Provider = ({ children }: { children: React.ReactNode }) => {
-  const [state, dispatch] = useReducer(reducer, defaultState);
+export const Provider = ({
+  children,
+  initialState,
+}: {
+  children: React.ReactNode;
+  initialState: State;
+}) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  console.log(state);
   return (
     <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
   );

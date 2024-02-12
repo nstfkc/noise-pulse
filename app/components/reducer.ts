@@ -19,28 +19,44 @@ export type State = {
   noiseOpacity: number;
 };
 
-const id1 = generateRandomId();
-const id2 = generateRandomId();
+export const generateRandomState = (): State => {
+  const id1 = generateRandomId();
+  const id2 = generateRandomId();
 
-export const defaultState: State = {
-  colors: [
-    {
-      id: id1,
-      code: uniqolor.random().color,
-      stop: 20,
-    },
-    {
-      id: id2,
-      code: uniqolor.random().color,
-      stop: 80,
-    },
-  ],
-  selectedColorId: id1,
-  gradientAngle: 90,
-  gradientType: "linear-gradient",
-  noiseType: "turbulence",
-  noiseIntensity: 0.5,
-  noiseOpacity: 0.5,
+  const firstStop = Math.floor(Math.random() * 30) + 1;
+  const secondStop = Math.floor(Math.random() * 30) + 30;
+  const thirdStop = Math.floor(Math.random() * 30) + 70;
+
+  const thridColor =
+    Math.random() * 10 > 5
+      ? {
+          id: generateRandomId(),
+          code: uniqolor.random().color,
+          stop: thirdStop,
+        }
+      : null;
+  return {
+    colors: [
+      {
+        id: id1,
+        code: uniqolor.random().color,
+        stop: firstStop,
+      },
+      {
+        id: id2,
+        code: uniqolor.random().color,
+        stop: thridColor ? secondStop : thirdStop,
+      },
+      ...(thridColor ? [thridColor] : []),
+    ],
+    selectedColorId: id1,
+    gradientAngle: Math.floor(Math.random() * 360) + 1,
+    gradientType:
+      Math.random() * 10 > 5 ? "linear-gradient" : "radial-gradient",
+    noiseType: Math.random() * 10 > 5 ? "turbulence" : "fractalNoise",
+    noiseIntensity: Math.max(0.2, Number((Math.random() * 5).toFixed(2))),
+    noiseOpacity: Number(Math.random().toFixed(2)),
+  };
 };
 
 type AddColor = {
@@ -276,18 +292,32 @@ const updateNoiseOpacity: Handler<UpdateNoiseOpacity> = (payload, state) => {
 const reset = (): State => {
   const id1 = generateRandomId();
   const id2 = generateRandomId();
+
+  const firstStop = Math.floor(Math.random() * 30) + 1;
+  const secondStop = Math.floor(Math.random() * 30) + 30;
+  const thirdStop = Math.floor(Math.random() * 30) + 70;
+
+  const thridColor =
+    Math.random() * 10 > 5
+      ? {
+          id: generateRandomId(),
+          code: uniqolor.random().color,
+          stop: thirdStop,
+        }
+      : null;
   return {
     colors: [
       {
         id: id1,
         code: uniqolor.random().color,
-        stop: 20,
+        stop: firstStop,
       },
       {
         id: id2,
         code: uniqolor.random().color,
-        stop: 80,
+        stop: thridColor ? secondStop : thirdStop,
       },
+      ...(thridColor ? [thridColor] : []),
     ],
     selectedColorId: id1,
     gradientAngle: Math.floor(Math.random() * 360) + 1,
@@ -295,7 +325,7 @@ const reset = (): State => {
       Math.random() * 10 > 5 ? "linear-gradient" : "radial-gradient",
     noiseType: Math.random() * 10 > 5 ? "turbulence" : "fractalNoise",
     noiseIntensity: Number((Math.random() * 5).toFixed(2)),
-    noiseOpacity: Number((Math.random() * 5).toFixed(2)),
+    noiseOpacity: Number(Math.random().toFixed(2)),
   };
 };
 

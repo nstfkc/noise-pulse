@@ -2,7 +2,7 @@
 
 import ColorIcon from "./icons/color.svg";
 import { SegmentControl } from "./SegmentControl";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { GradientSlider } from "./GradientSlider";
 import { GradientCurrentColor } from "./GradientCurrentColor";
 import { SimpleSlider } from "./SimpleSlider";
@@ -10,13 +10,6 @@ import { Context } from "./context";
 
 export const SidebarGradientSection = () => {
   const { state, dispatch } = useContext(Context);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setReady(true);
-  }, []);
-
-  if (!ready) return null;
 
   return (
     <div className="flex flex-col gap-6">
