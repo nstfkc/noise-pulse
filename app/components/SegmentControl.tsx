@@ -4,12 +4,12 @@ import * as Switch from "@radix-ui/react-switch";
 export const SegmentControl = (props: {
   items: ReadonlyArray<{ label: string; value: string }>;
   onValueChange: (value: string) => void;
-  defaultValue: string;
+  value: string;
 }) => {
-  const { items = [], defaultValue, onValueChange } = props;
+  const { items = [], value, onValueChange } = props;
   return (
     <Switch.Root
-      defaultChecked={defaultValue === items[1].value}
+      checked={value === items[0].value}
       onCheckedChange={(checked) => {
         onValueChange(checked ? items[1].value : items[0].value);
       }}

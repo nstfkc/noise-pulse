@@ -21,7 +21,7 @@ export const SidebarGradientSection = () => {
       </div>
       <div>
         <SegmentControl
-          defaultValue="linear-gradient"
+          value={state.gradientType}
           onValueChange={(gradientType) => {
             dispatch({
               type: "UPDATE_GRADIENT_TYPE",

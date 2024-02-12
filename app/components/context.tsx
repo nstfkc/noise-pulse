@@ -22,7 +22,7 @@ export const Provider = ({
   const { push } = useRouter();
 
   useEffect(() => {
-    push(`?state=${compressState(state)}`, {});
+    push(`?i=${compressState(state)}`, {});
   }, [state, push]);
 
   return (

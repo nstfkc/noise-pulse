@@ -6,9 +6,9 @@ const Page = (props: any) => {
   const { searchParams } = props;
 
   let initialState = generateRandomState();
-  if (searchParams["state"]) {
+  if (searchParams["i"]) {
     try {
-      initialState = decompressState(searchParams["state"]);
+      initialState = decompressState(searchParams["i"]);
     } catch (e) {
       console.error(e);
     }

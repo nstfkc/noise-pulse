@@ -18,7 +18,7 @@ export const SidebarNoiseSection = () => {
       </div>
       <div>
         <SegmentControl
-          defaultValue="fractal"
+          value={state.noiseType}
           onValueChange={(noiseType) => {
             dispatch({
               type: "UPDATE_NOISE_TYPE",
