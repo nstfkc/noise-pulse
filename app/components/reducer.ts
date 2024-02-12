@@ -273,7 +273,31 @@ const updateNoiseOpacity: Handler<UpdateNoiseOpacity> = (payload, state) => {
   };
 };
 
-const reset = (): State => defaultState;
+const reset = (): State => {
+  const id1 = generateRandomId();
+  const id2 = generateRandomId();
+  return {
+    colors: [
+      {
+        id: id1,
+        code: uniqolor.random().color,
+        stop: 20,
+      },
+      {
+        id: id2,
+        code: uniqolor.random().color,
+        stop: 80,
+      },
+    ],
+    selectedColorId: id1,
+    gradientAngle: Math.floor(Math.random() * 360) + 1,
+    gradientType:
+      Math.random() * 10 > 5 ? "linear-gradient" : "radial-gradient",
+    noiseType: Math.random() * 10 > 5 ? "turbulence" : "fractalNoise",
+    noiseIntensity: Number((Math.random() * 5).toFixed(2)),
+    noiseOpacity: Number((Math.random() * 5).toFixed(2)),
+  };
+};
 
 const handlers = {
   ADD_COLOR: addColor,
