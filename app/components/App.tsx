@@ -1,15 +1,18 @@
-import { Noise } from "./Noise";
+"use client";
+
+import { Background } from "./Background";
 import { Sidebar } from "./Sidebar";
+import { Provider } from "./context";
 
 export const App = () => {
   return (
-    <div className="relative h-full">
-      <div className="top-0 left-0 z-[-1] absolute w-full h-full bg-gradient-to-br from-stone-800 to-stone-600">
-        <Noise />
+    <Provider>
+      <div className="relative h-full">
+        <Background />
+        <div className="flex justify-end w-full h-full">
+          <Sidebar />
+        </div>
       </div>
-      <div className="flex justify-end w-full h-full">
-        <Sidebar />
-      </div>
-    </div>
+    </Provider>
   );
 };

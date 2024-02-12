@@ -2,7 +2,7 @@
 import * as Switch from "@radix-ui/react-switch";
 
 export const SegmentControl = (props: {
-  items: { label: string; value: string }[];
+  items: ReadonlyArray<{ label: string; value: string }>;
   onValueChange: (value: string) => void;
   defaultValue: string;
 }) => {
@@ -10,9 +10,9 @@ export const SegmentControl = (props: {
   return (
     <Switch.Root
       defaultChecked={defaultValue === items[1].value}
-      onCheckedChange={(checked) =>
-        onValueChange(checked ? items[1].value : items[0].value)
-      }
+      onCheckedChange={(checked) => {
+        onValueChange(checked ? items[1].value : items[0].value);
+      }}
       className="recess group bg-slate-900/40 w-full rounded-xl h-[40px] relative outline-none"
     >
       <Switch.Thumb asChild>

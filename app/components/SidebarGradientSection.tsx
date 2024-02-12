@@ -2,13 +2,14 @@
 
 import ColorIcon from "./icons/color.svg";
 import { SegmentControl } from "./SegmentControl";
-import { defaultState, reducer } from "./reducer";
-import { useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GradientSlider } from "./GradientSlider";
 import { GradientCurrentColor } from "./GradientCurrentColor";
+import { SimpleSlider } from "./SimpleSlider";
+import { Context } from "./context";
 
 export const SidebarGradientSection = () => {
-  const [state, dispatch] = useReducer(reducer, defaultState);
+  const { state, dispatch } = useContext(Context);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -27,11 +28,16 @@ export const SidebarGradientSection = () => {
       </div>
       <div>
         <SegmentControl
-          defaultValue="radial"
-          onValueChange={(value) => console.log(value)}
+          defaultValue="linear-gradient"
+          onValueChange={(gradientType) => {
+            dispatch({
+              type: "UPDATE_GRADIENT_TYPE",
+              payload: { gradientType } as any,
+            });
+          }}
           items={[
-            { label: "Linear", value: "linear" },
-            { label: "Radial", value: "radial" },
+            { label: "Linear", value: "linear-gradient" },
+            { label: "Radial", value: "radial-gradient" },
           ]}
         />
       </div>
@@ -73,6 +79,30 @@ export const SidebarGradientSection = () => {
             (color) => color.id === state.selectedColorId
           )}
         />
+      </div>
+      <div>
+        <div
+          data-disabled={state.gradientType === "radial-gradient"}
+          className="flex items-center justify-between gap-2 data-[disabled=true]:opacity-50"
+        >
+          <div className="text-[15px] font-semibold">Angle</div>
+          <SimpleSlider
+            disabled={state.gradientType === "radial-gradient"}
+            min={0}
+            max={360}
+            step={1}
+            value={[state.gradientAngle]}
+            onValueChange={([gradientAngle]) => {
+              dispatch({
+                type: "UPDATE_GRADIENT_ANGLE",
+                payload: { gradientAngle },
+              });
+            }}
+          />
+          <div className="bg-slate-900/40 w-[52px] text-slate-200 p-2 rounded-lg recess text-[13px]">
+            {state.gradientAngle} °
+          </div>
+        </div>
       </div>
     </div>
   );
