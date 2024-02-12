@@ -1,6 +1,8 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { State, Action, reducer } from "./reducer";
-import { createContext, Dispatch, useReducer } from "react";
+import { createContext, Dispatch, useEffect, useReducer } from "react";
+import { compressState } from "./helpers";
 
 interface ContextValue {
   state: State;
@@ -17,7 +19,12 @@ export const Provider = ({
   initialState: State;
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(state);
+  const { push } = useRouter();
+
+  useEffect(() => {
+    push(`?state=${compressState(state)}`, {});
+  }, [state, push]);
+
   return (
     <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
   );

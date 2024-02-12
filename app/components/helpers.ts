@@ -1,3 +1,5 @@
+import { State } from "./reducer";
+
 export function generateRandomId(length: number = 6): string {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -18,6 +20,64 @@ export function arrayDiff<T>(arr1: T[], arr2: T[]): T | undefined {
     }
   }
 }
+
+export function base64Encode(str: string): string {
+  return btoa(encodeURIComponent(str));
+}
+
+export function base64Decode(str: string): string {
+  return decodeURIComponent(atob(str));
+}
+
+export const compressState = (state: State): string => {
+  const {
+    colors,
+    gradientAngle,
+    gradientType,
+    noiseType,
+    noiseIntensity,
+    noiseOpacity,
+  } = state;
+  return base64Encode(
+    [
+      colors.map(({ code, stop }) => `${code}:${stop}`).join("|"),
+      gradientAngle,
+      gradientType === "linear-gradient" ? "l" : "r",
+      noiseType === "turbulence" ? "t" : "f",
+      noiseIntensity,
+      noiseOpacity,
+    ].join(",")
+  );
+};
+
+export const decompressState = (str: string): State => {
+  const [
+    colors,
+    gradientAngle,
+    gradientType,
+    noiseType,
+    noiseIntensity,
+    noiseOpacity,
+  ] = base64Decode(str).split(",");
+  const id1 = generateRandomId();
+
+  return {
+    colors: colors.split("|").map((color, index) => {
+      const [code, stop] = color.split(":");
+      return {
+        id: index === 0 ? id1 : generateRandomId(),
+        code,
+        stop: Number(stop),
+      };
+    }),
+    gradientAngle: Number(gradientAngle),
+    gradientType: gradientType === "l" ? "linear-gradient" : "radial-gradient",
+    noiseType: noiseType === "t" ? "turbulence" : "fractalNoise",
+    noiseIntensity: Number(noiseIntensity),
+    noiseOpacity: Number(noiseOpacity),
+    selectedColorId: id1,
+  };
+};
 
 type Params = {
   background: string;

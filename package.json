@@ -17,6 +17,7 @@
     "next-plugin-svgr": "^1.1.10",
     "react": "^18",
     "react-dom": "^18",
+    "shrink-string": "^3.1.9",
     "uniqolor": "^1.1.1"
   },
   "devDependencies": {
