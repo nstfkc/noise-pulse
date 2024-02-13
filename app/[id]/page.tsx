@@ -12,12 +12,12 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     openGraph: {
       title: "Noisy Gradient Background",
       description: "Create a noisy gradient background",
-      images: [`/${id}/api/og`],
+      images: [`https://noise-pulse.vercel.app/${id}/api/og`],
     },
     twitter: {
       title: "Noisy Gradient Background",
       description: "Create a noisy gradient background",
-      images: [`/${id}/api/og`],
+      images: [`https://noise-pulse.vercel.app/${id}/api/og`],
     },
   };
 }
