@@ -23,7 +23,7 @@ export const Provider = ({
 
   useEffect(() => {
     if (compressState(state) === compressState(initialState)) return;
-    push(`/${compressState(state)}`, {});
+    window.history.pushState({}, "", `/${compressState(state)}`);
   }, [state, push, initialState]);
 
   return (

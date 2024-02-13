@@ -1,5 +1,5 @@
-import { App } from "./components/App";
-import { decompressState } from "./components/helpers";
+import { redirect } from "next/navigation";
+import { decompressState, compressState } from "./components/helpers";
 import { generateRandomState } from "./components/reducer";
 
 const Page = (props: any) => {
@@ -14,11 +14,7 @@ const Page = (props: any) => {
     }
   }
 
-  return (
-    <div className="w-screen h-screen">
-      <App initialState={initialState} />
-    </div>
-  );
+  redirect(`/${compressState(initialState)}`);
 };
 
 export default Page;
