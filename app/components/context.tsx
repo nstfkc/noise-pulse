@@ -22,8 +22,9 @@ export const Provider = ({
   const { push } = useRouter();
 
   useEffect(() => {
-    push(`?i=${compressState(state)}`, {});
-  }, [state, push]);
+    if (compressState(state) === compressState(initialState)) return;
+    push(`/${compressState(state)}`, {});
+  }, [state, push, initialState]);
 
   return (
     <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
