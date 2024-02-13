@@ -27,6 +27,15 @@ export async function GET(
       }, ${colors.map((color) => `${color.code} ${color.stop}%`).join(", ")})`;
   }
 
+  console.log({
+    colors,
+    gradientAngle,
+    gradientType,
+    noiseIntensity,
+    noiseOpacity,
+    noiseType,
+  });
+
   return new ImageResponse(
     (
       <div

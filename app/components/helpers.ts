@@ -40,13 +40,15 @@ export const compressState = (state: State): string => {
   } = state;
   return base64Encode(
     [
-      colors.map(({ code, stop }) => `${code}:${stop}`).join("|"),
+      colors
+        .map(({ code, stop }) => `${code.replaceAll(" ", "")}:${stop}`)
+        .join("|"),
       gradientAngle,
       gradientType === "linear-gradient" ? "l" : "r",
       noiseType === "turbulence" ? "t" : "f",
       noiseIntensity,
       noiseOpacity,
-    ].join(",")
+    ].join(";")
   );
 };
 
@@ -58,7 +60,7 @@ export const decompressState = (str: string): State => {
     noiseType,
     noiseIntensity,
     noiseOpacity,
-  ] = base64Decode(str).split(",");
+  ] = base64Decode(str).split(";");
   const id1 = generateRandomId();
 
   return {
@@ -84,10 +86,32 @@ type Params = {
   noiseType: string;
   baseFrequency: number;
   opacity: number;
+  kind: "html" | "jsx";
 };
+
 export function generateCode(params: Params) {
   const { background, baseFrequency, noiseType, opacity } = params;
-  return `<div style="position:absolute;width:100%;height:100%;z-index:0;pointer-events:none;background:${background}">
+  if (params.kind === "jsx") {
+    return `<div style={{ position:'absolute', width:'100%',height:'100%',zIndex:0,pointerEvents:'none',background:'${background}'}}>
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    <filter id="n" x="0" y="0">
+      <feTurbulence
+        type="${noiseType}"
+        baseFrequency="${baseFrequency}"
+        stitchTiles="stitch"
+      />
+    </filter>
+    <rect
+      width="100%"
+      height="100%"
+      filter="url(#n)"
+      opacity="${opacity}"
+    />
+  </svg>
+</div>`;
+  }
+  if (params.kind === "html") {
+    return `<div style="position:absolute;width:100%;height:100%;z-index:0;pointer-events:none;background:${background}">
   <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
     <filter id="n" x="0" y="0">
       <feTurbulence
@@ -105,4 +129,16 @@ export function generateCode(params: Params) {
   </svg>
 </div>
 `;
+  }
 }
+
+export const copyToClipboard = (str: string, cb: VoidFunction) => {
+  navigator.permissions
+    .query({ name: "clipboard-write" } as any)
+    .then((result) => {
+      if (result.state === "granted" || result.state === "prompt") {
+        navigator.clipboard.writeText(str);
+        cb();
+      }
+    });
+};

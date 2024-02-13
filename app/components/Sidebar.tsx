@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Context } from "./context";
-import ResetIcon from "./icons/reset.svg";
+import MagicIcon from "./icons/magic.svg";
 import { SidebarGradientSection } from "./SidebarGradientSection";
 import { SidebarNoiseSection } from "./SidebarNoiseSection";
 
@@ -16,10 +16,14 @@ export const Sidebar = () => {
         <div>
           <button
             onClick={() => dispatch({ type: "RESET", payload: {} })}
-            className="flex gap-2 items-center py-2"
+            className={[
+              "bg-gradient-to-t from-[#9730ff] to-[#7f30ff]",
+              "py-2 px-4 rounded-[12px] text-white",
+              "flex gap-2 items-center",
+              "active:scale-[0.99]",
+            ].join(" ")}
           >
-            <ResetIcon />
-            Generate
+            <MagicIcon /> <span className="text-[15px]">Generate</span>
           </button>
         </div>
       </div>
