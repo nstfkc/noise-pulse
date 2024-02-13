@@ -7,20 +7,22 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
   const id = params.id;
 
   return {
-    title: "Noisy Gradient Background",
+    title: "Noise Pulse",
+    description: "Background generator with noise and gradients",
     metadataBase: new URL(
       process.env.NODE_ENV !== "development"
         ? `https://noise-pulse.vercel.app`
         : "http://localhost:3000"
     ),
     openGraph: {
-      title: "Noisy Gradient Background",
-      description: "Create a noisy gradient background",
+      title: "Noise Pulse",
+
+      description: "Background generator with noise and gradients",
       images: [`${id}/api/og`],
     },
     twitter: {
-      title: "Noisy Gradient Background",
-      description: "Create a noisy gradient background",
+      title: "Noise Pulse",
+      description: "Background generator with noise and gradients",
       images: [`${id}/api/og`],
     },
   };

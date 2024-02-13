@@ -81,30 +81,54 @@ const CodeMenu = (
 
 export const CopyCode = () => {
   return (
-    <div className="flex py-4 justify-center">
-      <div className="bg-[#202e42] p-2 rounded-[20px] flex items-center gap-4">
-        <CodeMenu>
+    <div>
+      <div className="flex py-2 justify-center">
+        <div className="bg-[#202e42] p-2 rounded-[20px] flex items-center gap-4">
+          <CodeMenu>
+            <button
+              className={[
+                "bg-gradient-to-t from-[#9730ff] to-[#7f30ff]",
+                "py-2 px-4 rounded-[12px] text-white",
+                "flex gap-2 items-center",
+                "active:scale-[0.99]",
+              ].join(" ")}
+            >
+              <CopyIcon /> <span className="text-[15px]">Copy Code</span>
+            </button>
+          </CodeMenu>
           <button
-            className={[
-              "bg-gradient-to-t from-[#9730ff] to-[#7f30ff]",
-              "py-2 px-4 rounded-[12px] text-white",
-              "flex gap-2 items-center",
-              "active:scale-[0.99]",
-            ].join(" ")}
+            onClick={() => {
+              copyToClipboard(window.location.href, () => {
+                toast.success("Link copied to clipboard");
+              });
+            }}
+            className="py-2 px-4 flex gap-2 items-center active:scale-[0.99]"
           >
-            <CopyIcon /> <span className="text-[15px]">Copy Code</span>
+            <ShareIcon /> <span className="text-[15px] text-white">Share</span>
           </button>
-        </CodeMenu>
-        <button
-          onClick={() => {
-            copyToClipboard(window.location.href, () => {
-              toast.success("Link copied to clipboard");
-            });
-          }}
-          className="py-2 px-4 flex gap-2 items-center active:scale-[0.99]"
-        >
-          <ShareIcon /> <span className="text-[15px] text-white">Share</span>
-        </button>
+        </div>
+      </div>
+      <div className="flex flex-col justify-center items-center text-sm py-1">
+        <div>
+          Built by{" "}
+          <a
+            className="underline"
+            href="https://x.com/nstfkc"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @nstfkc
+          </a>{" "}
+          and{" "}
+          <a
+            className="underline"
+            href="https://x.com/emblemo"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @emblemo
+          </a>
+        </div>
       </div>
     </div>
   );
