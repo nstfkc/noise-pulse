@@ -4,20 +4,24 @@ import { decompressState } from "../components/helpers";
 import { generateRandomState } from "../components/reducer";
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
-  // read route params
   const id = params.id;
 
   return {
     title: "Noisy Gradient Background",
+    metadataBase: new URL(
+      process.env.NODE_ENV !== "development"
+        ? `https://noise-pulse.vercel.app`
+        : "http://localhost:3000"
+    ),
     openGraph: {
       title: "Noisy Gradient Background",
       description: "Create a noisy gradient background",
-      images: [`https://noise-pulse.vercel.app/${id}/api/og`],
+      images: [`${id}/api/og`],
     },
     twitter: {
       title: "Noisy Gradient Background",
       description: "Create a noisy gradient background",
-      images: [`https://noise-pulse.vercel.app/${id}/api/og`],
+      images: [`${id}/api/og`],
     },
   };
 }

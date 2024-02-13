@@ -26,6 +26,7 @@ export async function GET(
         gradientType === "linear-gradient" ? `${deg}deg` : "circle at center"
       }, ${colors.map((color) => `${color.code} ${color.stop}%`).join(", ")})`;
   }
+
   return new ImageResponse(
     (
       <div
