@@ -10,9 +10,13 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
   return {
     title: "Noisy Gradient Background",
     openGraph: {
+      title: "Noisy Gradient Background",
+      description: "Create a noisy gradient background",
       images: [`api/og/${id}`],
     },
     twitter: {
+      title: "Noisy Gradient Background",
+      description: "Create a noisy gradient background",
       images: [`api/og/${id}`],
     },
   };
