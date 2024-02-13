@@ -13,6 +13,7 @@ const Page = (props: any) => {
       console.error(e);
     }
   }
+
   return (
     <div className="w-screen h-screen">
       <App initialState={initialState} />

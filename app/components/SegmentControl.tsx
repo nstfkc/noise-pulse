@@ -9,7 +9,7 @@ export const SegmentControl = (props: {
   const { items = [], value, onValueChange } = props;
   return (
     <Switch.Root
-      checked={value === items[0].value}
+      checked={value === items[1].value}
       onCheckedChange={(checked) => {
         onValueChange(checked ? items[1].value : items[0].value);
       }}
@@ -27,13 +27,13 @@ export const SegmentControl = (props: {
       </Switch.Thumb>
       <div className="absolute z-1 h-full left-0 top-0 w-full grid grid-cols-2">
         <div
-          className="flex items-center justify-center group-data-[state=unchecked]:opacity-100 opacity-60"
+          className="flex items-center justify-center group-data-[state=unchecked]:opacity-100 hover:opacity-90 opacity-60 transition-opacity"
           key={items[0].value}
         >
           {items[0].label}
         </div>
         <div
-          className="flex items-center justify-center group-data-[state=checked]:opacity-100 opacity-60"
+          className="flex items-center justify-center group-data-[state=checked]:opacity-100 hover:opacity-90 opacity-60 transition-opacity"
           key={items[1].value}
         >
           {items[1].label}

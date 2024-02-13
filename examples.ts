@@ -23,3 +23,5 @@ const sun = {
   noiseIntensity: 4.07,
   noiseOpacity: 0.75,
 };
+
+// http://localhost:3000/?i=JTIzY2Y5ODVlJTNBMTclN0MlMjNhZGM0M2IlM0EzMyU3QyUyMzQwOWFjNCUzQTcwJTJDOTUlMkNyJTJDdCUyQzIuMTklMkMwLjky
