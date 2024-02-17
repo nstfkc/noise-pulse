@@ -1,12 +1,9 @@
 "use client";
 
-import { useContext } from "react";
 import { Noise } from "./Noise";
-import { Context } from "./context";
+import { State } from "./helpers";
 
-export const Background = () => {
-  const { state } = useContext(Context);
-
+export const Background = ({ state }: { state: State }) => {
   let bg = (_deg: number) => state.colors[0].code;
 
   if (state.colors.length > 1) {

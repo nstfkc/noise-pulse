@@ -5,6 +5,8 @@ import ShareIcon from "./icons/share.svg";
 import * as Popover from "@radix-ui/react-popover";
 import { copyToClipboard, generateCode } from "./helpers";
 import { Context } from "./context";
+import { LuBookmarkMinus, LuBookmarkPlus } from "react-icons/lu";
+import { BookmarkContext } from "./Bookmarks";
 
 const CodeMenu = (
   props: PropsWithChildren<ComponentProps<typeof Popover.Root>>
@@ -80,6 +82,11 @@ const CodeMenu = (
 };
 
 export const CopyCode = () => {
+  const { addBookmark, bookmarks, removeBookmark } =
+    useContext(BookmarkContext);
+  const id = String(window.location.href.split("/").pop()?.replaceAll("=", ""));
+  const isBookmarked = bookmarks.includes(id);
+  const bookmarkAction = isBookmarked ? removeBookmark : addBookmark;
   return (
     <div>
       <div className="flex py-2 justify-center">
@@ -105,6 +112,24 @@ export const CopyCode = () => {
             className="py-2 px-4 flex gap-2 items-center active:scale-[0.99]"
           >
             <ShareIcon /> <span className="text-[15px] text-white">Share</span>
+          </button>
+          <button
+            onClick={() => {
+              bookmarkAction(id);
+              if (isBookmarked) {
+                toast.success("Bookmark removed");
+              } else {
+                toast.success("Bookmark saved");
+              }
+            }}
+            className="py-2 px-4 flex gap-2 items-center active:scale-[0.99]"
+          >
+            {isBookmarked ? (
+              <LuBookmarkMinus className="text-white text-2xl" />
+            ) : (
+              <LuBookmarkPlus className="text-white text-2xl" />
+            )}
+            <span className="text-[15px] text-white">Bookmark</span>
           </button>
         </div>
       </div>

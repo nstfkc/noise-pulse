@@ -1,63 +1,7 @@
 import uniqolor from "uniqolor";
 
-import { arrayDiff, generateRandomId } from "./helpers";
+import { State, arrayDiff, generateRandomId } from "./helpers";
 import { Reducer } from "react";
-
-export type Color = {
-  id: string;
-  code: string;
-  stop: number;
-};
-
-export type State = {
-  colors: Color[];
-  gradientAngle: number;
-  selectedColorId: string;
-  gradientType: "linear-gradient" | "radial-gradient";
-  noiseType: "turbulence" | "fractalNoise";
-  noiseIntensity: number;
-  noiseOpacity: number;
-};
-
-export const generateRandomState = (): State => {
-  const id1 = generateRandomId();
-  const id2 = generateRandomId();
-
-  const firstStop = Math.floor(Math.random() * 30) + 1;
-  const secondStop = Math.floor(Math.random() * 30) + 30;
-  const thirdStop = Math.floor(Math.random() * 30) + 70;
-
-  const thridColor =
-    Math.random() * 10 > 5
-      ? {
-          id: generateRandomId(),
-          code: uniqolor.random().color,
-          stop: thirdStop,
-        }
-      : null;
-  return {
-    colors: [
-      {
-        id: id1,
-        code: uniqolor.random().color,
-        stop: firstStop,
-      },
-      {
-        id: id2,
-        code: uniqolor.random().color,
-        stop: thridColor ? secondStop : thirdStop,
-      },
-      ...(thridColor ? [thridColor] : []),
-    ],
-    selectedColorId: id1,
-    gradientAngle: Math.floor(Math.random() * 360) + 1,
-    gradientType:
-      Math.random() * 10 > 5 ? "linear-gradient" : "radial-gradient",
-    noiseType: Math.random() * 10 > 5 ? "turbulence" : "fractalNoise",
-    noiseIntensity: Math.max(0.2, Number((Math.random() * 5).toFixed(2))),
-    noiseOpacity: Number(Math.random().toFixed(2)),
-  };
-};
 
 type AddColor = {
   type: "ADD_COLOR";

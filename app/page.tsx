@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { decompressState, compressState } from "./components/helpers";
-import { generateRandomState } from "./components/reducer";
+import { generateRandomState } from "./components/helpers";
 
 const Page = (props: any) => {
   const { searchParams } = props;

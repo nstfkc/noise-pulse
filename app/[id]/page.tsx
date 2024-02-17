@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { App } from "../components/App";
 import { decompressState } from "../components/helpers";
-import { generateRandomState } from "../components/reducer";
+import { generateRandomState } from "../components/helpers";
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const id = params.id;

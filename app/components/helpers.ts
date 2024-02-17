@@ -1,4 +1,11 @@
-import { State } from "./reducer";
+import uniqolor from "uniqolor";
+import { log } from "util";
+
+export type Color = {
+  id: string;
+  code: string;
+  stop: number;
+};
 
 export function generateRandomId(length: number = 6): string {
   const characters =
@@ -26,7 +33,13 @@ export function base64Encode(str: string): string {
 }
 
 export function base64Decode(str: string): string {
-  return decodeURIComponent(atob(str));
+  try {
+    return decodeURIComponent(atob(str.replaceAll("%3D", "")));
+  } catch (err) {
+    console.log(str);
+    throw new Error("Invalid base64 string");
+    // Do something
+  }
 }
 
 export const compressState = (state: State): string => {
@@ -141,4 +154,58 @@ export const copyToClipboard = (str: string, cb: VoidFunction) => {
         cb();
       }
     });
+};
+
+export type State = {
+  colors: Color[];
+  gradientAngle: number;
+  selectedColorId: string;
+  gradientType: "linear-gradient" | "radial-gradient";
+  noiseType: "turbulence" | "fractalNoise";
+  noiseIntensity: number;
+  noiseOpacity: number;
+};
+
+export const generateRandomState = (): State => {
+  const id1 = generateRandomId();
+  const id2 = generateRandomId();
+
+  const firstStop = Math.floor(Math.random() * 30) + 1;
+  const secondStop = Math.floor(Math.random() * 30) + 30;
+  const thirdStop = Math.floor(Math.random() * 30) + 70;
+
+  const thridColor =
+    Math.random() * 10 > 5
+      ? {
+          id: generateRandomId(),
+          code: uniqolor.random({
+            saturation: Math.random() * 100,
+            lightness: Math.random() * 100,
+            differencePoint: Math.random() * 100,
+          }).color,
+          stop: thirdStop,
+        }
+      : null;
+  return {
+    colors: [
+      {
+        id: id1,
+        code: uniqolor.random().color,
+        stop: firstStop,
+      },
+      {
+        id: id2,
+        code: uniqolor.random().color,
+        stop: thridColor ? secondStop : thirdStop,
+      },
+      ...(thridColor ? [thridColor] : []),
+    ],
+    selectedColorId: id1,
+    gradientAngle: Math.floor(Math.random() * 360) + 1,
+    gradientType:
+      Math.random() * 10 > 5 ? "linear-gradient" : "radial-gradient",
+    noiseType: Math.random() * 10 > 5 ? "turbulence" : "fractalNoise",
+    noiseIntensity: Math.max(0.2, Number((Math.random() * 5).toFixed(2))),
+    noiseOpacity: Number(Math.random().toFixed(2)),
+  };
 };
