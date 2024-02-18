@@ -1,6 +1,6 @@
 import * as Slider from "@radix-ui/react-slider";
 import { useState } from "react";
-import { Color } from "./reducer";
+import { Color } from "./helpers";
 
 function isBetween(x: number, min: number, max: number) {
   return x >= min && x <= max;

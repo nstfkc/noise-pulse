@@ -1,8 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { State, Action, reducer } from "./reducer";
+import { Action, reducer } from "./reducer";
 import { createContext, Dispatch, useEffect, useReducer } from "react";
-import { compressState } from "./helpers";
+import { State, compressState } from "./helpers";
 
 interface ContextValue {
   state: State;

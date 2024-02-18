@@ -1,7 +1,7 @@
-import { Color } from "./reducer";
 import TrashIcon from "./icons/bin.svg";
 import { ColorInput } from "./ColorPicker";
 import { ComponentProps } from "react";
+import { Color } from "./helpers";
 
 interface Props {
   color: Color;
