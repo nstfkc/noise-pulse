@@ -34,7 +34,7 @@ export const InspirationItem = ({
         <div className="flex justify-end gap-1 p-1 w-full">
           {hideBookmark ? null : (
             <button
-              className="size-8 flex items-center justify-center"
+              className="size-8 flex items-center justify-center bg-white/20 rounded-full"
               onClick={() => {
                 bookmarkAction(id);
                 if (isbookmarked) {
@@ -54,7 +54,7 @@ export const InspirationItem = ({
           <Link
             target="_blank"
             href={`/${id}`}
-            className="size-8 flex items-center justify-center"
+            className="size-8 flex items-center justify-center bg-white/20 rounded-full"
           >
             <LuArrowUpRightSquare className="text-lg" />
           </Link>
