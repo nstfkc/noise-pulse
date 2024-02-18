@@ -9,7 +9,7 @@ import {
 import CopyIcon from "./icons/copy.svg";
 import ShareIcon from "./icons/share.svg";
 import * as Popover from "@radix-ui/react-popover";
-import { copyToClipboard, generateCode } from "./helpers";
+import { compressState, copyToClipboard, generateCode } from "./helpers";
 import { Context } from "./context";
 import { LuBookmarkMinus, LuBookmarkPlus } from "react-icons/lu";
 import { BookmarkContext } from "./Bookmarks";
@@ -91,8 +91,8 @@ const CodeMenu = (
 export const CopyCode = () => {
   const { addBookmark, bookmarks, removeBookmark } =
     useContext(BookmarkContext);
-  const params = useParams();
-  const id = String(params.id);
+  const { state } = useContext(Context);
+  const id = compressState(state);
 
   const [isBookmarked, setIsBookmarked] = useState(false);
 
