@@ -40,11 +40,7 @@ const Page = (props: any) => {
     }
   }
 
-  return (
-    <div className="w-screen h-screen">
-      <App initialState={initialState} />
-    </div>
-  );
+  return <App initialState={initialState} />;
 };
 
 export default Page;

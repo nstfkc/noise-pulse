@@ -38,28 +38,28 @@ export const InspirationGrid = () => {
   }, [loadMore]);
 
   return (
-    <Virtuoso
-      style={{ width: "100%", height: "100vh" }}
-      data={Array.from(rows)}
-      useWindowScroll={true}
-      endReached={loadMore}
-      overscan={1000}
-      itemContent={(index, row) => {
-        return (
-          <div key={index} className="grid grid-cols-4">
-            {row.map((state, index) => {
-              return (
-                <div
-                  className="col-span-4 sm:col-span-2 md:col-span-1 aspect-video"
-                  key={index}
-                >
-                  <InspirationItem state={state} />
-                </div>
-              );
-            })}
-          </div>
-        );
-      }}
-    />
+    <div className="h-full">
+      <Virtuoso
+        data={Array.from(rows)}
+        endReached={loadMore}
+        overscan={1000}
+        itemContent={(index, row) => {
+          return (
+            <div key={index} className="grid grid-cols-4 gap-2 mb-2">
+              {row.map((state, index) => {
+                return (
+                  <div
+                    className="col-span-4 sm:col-span-2 md:col-span-1 aspect-video rounded-lg overflow-hidden"
+                    key={index}
+                  >
+                    <InspirationItem state={state} />
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }}
+      />
+    </div>
   );
 };

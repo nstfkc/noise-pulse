@@ -103,8 +103,8 @@ export const CopyCode = () => {
   const bookmarkAction = isBookmarked ? removeBookmark : addBookmark;
   return (
     <div>
-      <div className="flex py-2 justify-center">
-        <div className="bg-[#202e42] p-2 rounded-[20px] flex items-center gap-4">
+      <div className="flex py-2">
+        <div className="bg-[#202e42] md:p-2 rounded-[20px] flex w-full justify-between items-center gap-2">
           <CodeMenu>
             <button
               className={[
@@ -123,7 +123,7 @@ export const CopyCode = () => {
                 toast.success("Link copied to clipboard");
               });
             }}
-            className="py-2 px-4 flex gap-2 items-center active:scale-[0.99]"
+            className="py-2 flex gap-2 items-center active:scale-[0.99]"
           >
             <ShareIcon /> <span className="text-[15px] text-white">Share</span>
           </button>
@@ -145,28 +145,6 @@ export const CopyCode = () => {
             )}
             <span className="text-[15px] text-white">Bookmark</span>
           </button>
-        </div>
-      </div>
-      <div className="flex flex-col justify-center items-center text-sm py-1">
-        <div>
-          Built by{" "}
-          <a
-            className="underline"
-            href="https://x.com/nstfkc"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            @nstfkc
-          </a>{" "}
-          and{" "}
-          <a
-            className="underline"
-            href="https://x.com/emblemo"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            @emblemo
-          </a>
         </div>
       </div>
     </div>

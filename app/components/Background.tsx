@@ -20,7 +20,7 @@ export const Background = ({ state }: { state: State }) => {
   return (
     <div
       style={{ background: bg(state.gradientAngle) }}
-      className="top-0 left-0 z-[-1] absolute w-full h-full"
+      className="top-0 left-0 z-0 absolute w-full h-full"
     >
       <Noise
         type={state.noiseType}
