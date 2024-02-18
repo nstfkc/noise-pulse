@@ -6,6 +6,7 @@ import { Sidebar } from "./Sidebar";
 import { Provider } from "./context";
 import { MainBackground } from "./MainBackground";
 import { BookmarkProvider } from "./Bookmarks";
+import { State } from "./helpers";
 
 export const App = ({ initialState }: { initialState: State }) => {
   return (

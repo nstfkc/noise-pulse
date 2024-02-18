@@ -1,5 +1,11 @@
-import { Toaster, toast } from "sonner";
-import { ComponentProps, PropsWithChildren, useContext } from "react";
+import { toast } from "sonner";
+import {
+  ComponentProps,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import CopyIcon from "./icons/copy.svg";
 import ShareIcon from "./icons/share.svg";
 import * as Popover from "@radix-ui/react-popover";
@@ -7,6 +13,7 @@ import { copyToClipboard, generateCode } from "./helpers";
 import { Context } from "./context";
 import { LuBookmarkMinus, LuBookmarkPlus } from "react-icons/lu";
 import { BookmarkContext } from "./Bookmarks";
+import { useParams } from "next/navigation";
 
 const CodeMenu = (
   props: PropsWithChildren<ComponentProps<typeof Popover.Root>>
@@ -21,7 +28,7 @@ const CodeMenu = (
           ? `${deg}deg`
           : "circle at center"
       }, ${state.colors
-        .map((color) => `${color.code} ${color.stop}%`)
+        .map((color: any) => `${color.code} ${color.stop}%`)
         .join(", ")})`;
   }
 
@@ -84,8 +91,15 @@ const CodeMenu = (
 export const CopyCode = () => {
   const { addBookmark, bookmarks, removeBookmark } =
     useContext(BookmarkContext);
-  const id = String(window.location.href.split("/").pop()?.replaceAll("=", ""));
-  const isBookmarked = bookmarks.includes(id);
+  const params = useParams();
+  const id = String(params.id);
+
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  useEffect(() => {
+    setIsBookmarked(bookmarks.includes(id));
+  }, [bookmarks, id]);
+
   const bookmarkAction = isBookmarked ? removeBookmark : addBookmark;
   return (
     <div>

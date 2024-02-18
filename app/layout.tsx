@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={GeistSans.className}>
-        <header className="fixed">
+        <header className="fixed z-[100]">
           <nav className="p-4 flex gap-4">
             <Link href="/inspiration">Inspiration</Link>
             <Link href="/bookmarks">Bookmarks</Link>
